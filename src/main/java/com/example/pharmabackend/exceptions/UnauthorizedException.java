@@ -1,0 +1,8 @@
+package com.example.pharmabackend.exceptions;
+
+public class UnauthorizedException extends RuntimeException {
+    
+    public UnauthorizedException(String message) {
+        super(message);
+    }
+}
