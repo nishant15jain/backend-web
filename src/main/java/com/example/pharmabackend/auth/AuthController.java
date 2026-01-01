@@ -5,7 +5,6 @@ import com.example.pharmabackend.user.User;
 import com.example.pharmabackend.user.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,12 +12,10 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
+    public AuthController(UserRepository userRepository, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
     }
 
@@ -27,7 +24,7 @@ public class AuthController {
         User user = userRepository.findByEmail(request.getEmail())
             .orElseThrow(() -> new UnauthorizedException("Invalid email or password"));
         
-        if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
+        if (!request.getPassword().equals(user.getPassword())) {
             throw new UnauthorizedException("Invalid email or password");
         }
         
