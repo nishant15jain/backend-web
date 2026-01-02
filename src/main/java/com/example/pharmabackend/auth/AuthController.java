@@ -24,7 +24,7 @@ public class AuthController {
         User user = userRepository.findByEmail(request.getEmail())
             .orElseThrow(() -> new UnauthorizedException("Invalid email or password"));
         
-        if (!request.getPassword().equals(user.getPassword())) {
+        if (!request.getPassword().equals(user.getPasswordHash())) {
             throw new UnauthorizedException("Invalid email or password");
         }
         
