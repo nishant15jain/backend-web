@@ -31,7 +31,9 @@ public class SecurityConfig {
             "http://localhost:*",
             "https://localhost:*",
             "https://*.netlify.app",
-            "https://*.vercel.app"
+            "https://*.vercel.app",
+            "https://dermagreatpharma.com",
+            "https://www.dermagreatpharma.com"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
