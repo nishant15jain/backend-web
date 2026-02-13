@@ -1,27 +1,26 @@
 spring:
-  application:
-    name: pharmabackend
-
   datasource:
-    url: jdbc:mysql://${MYSQLHOST}:${MYSQLPORT}/${MYSQLDATABASE}?useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://${MYSQLHOST}:${MYSQLPORT}/${MYSQLDATABASE}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: ${MYSQLUSER}
     password: ${MYSQLPASSWORD}
-    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
-    hibernate:
-      ddl-auto: validate
-    show-sql: true
+    defer-datasource-initialization: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
+        hbm2ddl.auto: none
+
+  sql:
+    init:
+      mode: never
 
   flyway:
     enabled: true
     baseline-on-migrate: true
     baseline-version: 0
     locations: classpath:db/migration
-    fail-on-missing-locations: true
+    connect-retries: 10
+    connect-retries-interval: 5s
 
   servlet:
     multipart:
